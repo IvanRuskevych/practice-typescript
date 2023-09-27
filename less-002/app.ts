@@ -221,3 +221,106 @@ console.log(fruit);
 literal2(fruit, 'stroubery', 'delete');
 
 console.log(fruit);
+
+/*
+ * Типи для методів та функцій
+ */
+
+// Return Type
+function returnResult(num: number): number {
+  return num;
+}
+
+// Void
+function print(): void {
+  console.log('Print some text');
+}
+// Never
+function generateError(message: string, status: number): never {
+  throw { message, status };
+}
+
+// generateError('An error', 500);
+
+function customError(): never {
+  throw new Error('Some error');
+}
+
+/**
+ * Function Type
+ */
+
+let foo: () => void;
+foo = () => {
+  console.log('Some text');
+};
+
+let fn: (param1: number, param2: string) => void;
+fn = (param1: number, param2: string) => {
+  console.log(`${param2} ${param1}`);
+};
+
+function culc(
+  num1: number,
+  num2: number,
+  cb: (arg1: number, arg2: number) => number
+) {
+  return cb(num1, num2);
+}
+
+function cbFn(num1: number, num2: number) {
+  return num1 + num2;
+}
+
+const result = culc(1, 2, cbFn);
+
+console.log('culc-->>result', result);
+
+/**
+ * Custom Types
+ */
+// Опишемо тип
+type DatabaseDate = {
+  id: number;
+  price: number;
+  permission: string[];
+  details: {
+    title: string;
+    description?: string;
+  };
+};
+
+// Призначимо тип для об'єкта
+const dbDate: DatabaseDate = {
+  id: 1,
+  price: 10.99,
+  permission: ['read', 'write'],
+  details: {
+    title: 'New product',
+    description: 'This is awesome product!',
+  },
+};
+
+type PersonType = {
+  readonly name: string;
+  age?: number;
+
+  showName: () => void;
+};
+
+const person3: PersonType = {
+  name: 'Max',
+  showName() {
+    console.log(this.name);
+  },
+};
+const person4: PersonType = {
+  name: 'Hax',
+  showName() {
+    console.log(this.name);
+  },
+};
+// person1.name = 'New'; // err becouse readonly
+
+person3.showName();
+person4.showName();
