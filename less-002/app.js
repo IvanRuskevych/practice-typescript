@@ -158,3 +158,66 @@ literal2(fruit, 'stroubery', 'add');
 console.log(fruit);
 literal2(fruit, 'stroubery', 'delete');
 console.log(fruit);
+/*
+ * Типи для методів та функцій
+ */
+// Return Type
+function returnResult(num) {
+    return num;
+}
+// Void
+function print() {
+    console.log('Print some text');
+}
+// Never
+function generateError(message, status) {
+    throw { message: message, status: status };
+}
+// generateError('An error', 500);
+function customError() {
+    throw new Error('Some error');
+}
+/**
+ * Function Type
+ */
+var foo;
+foo = function () {
+    console.log('Some text');
+};
+var fn;
+fn = function (param1, param2) {
+    console.log("".concat(param2, " ").concat(param1));
+};
+function culc(num1, num2, cb) {
+    return cb(num1, num2);
+}
+function cbFn(num1, num2) {
+    return num1 + num2;
+}
+var result = culc(1, 2, cbFn);
+console.log('culc-->>result', result);
+// Призначимо тип для об'єкта
+var dbDate = {
+    id: 1,
+    price: 10.99,
+    permission: ['read', 'write'],
+    details: {
+        title: 'New product',
+        description: 'This is awesome product!',
+    },
+};
+var person3 = {
+    name: 'Max',
+    showName: function () {
+        console.log(this.name);
+    },
+};
+var person4 = {
+    name: 'Hax',
+    showName: function () {
+        console.log(this.name);
+    },
+};
+// person1.name = 'New'; // err becouse readonly
+person3.showName();
+person4.showName();
