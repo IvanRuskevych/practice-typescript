@@ -1,4 +1,4 @@
-console.log('Less-005 Advanced Types');
+console.log('<<<<< ========== LESS-005 ADVANCED TYPES ========== >>>>>');
 
 /**
  * Intersection Types#

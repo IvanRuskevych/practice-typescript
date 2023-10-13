@@ -1,3 +1,5 @@
+console.log('<<<<< ========== GENERIC--FUNCTION-METHOD ========== >>>>>');
+
 function merge<T, U, V>(objA: T, objB: U, objC: V) {
   return Object.assign({}, objA, objB, objC);
 }
