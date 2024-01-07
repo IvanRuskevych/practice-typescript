@@ -23,10 +23,29 @@ const updateUserProfile2 = {
     description: 'updateUserProfile: Partial<typeUser1>',
 };
 console.log('Задача 2 Partial<T>', fnUpdateUser2(updateUserProfile2));
-// Readonly<T>
-// Задача 1: Ви розробляєте функцію, яка приймає масив чисел і повертає його ж,
-//   але ви хочете гарантувати, що функція не змінює вхідний масив.
-// Задача 2: Створіть об'єкт конфігурації, який не можна змінювати після його створення.
+function fnReturnData0(data) {
+    data.push(6);
+    return data;
+}
+function fnReturnData(data) {
+    // data.push(6); // Помилка компіляції: "push" не існує на типі "Readonly<typeData>"
+    return Array.from(data);
+}
+function fnReturnDataArr(data) {
+    // data.push(6); // Помилка компіляції: "push" не існує на типі "ReadonlyArray<number>"
+    return Array.from(data);
+}
+const data = [1, 2, 3, 4, 5];
+const dataArr = [5, 4, 3, 2, 1];
+console.log('Задача 1 Readonly<T>', fnReturnData(data));
+console.log('Задача 1 Readonly<T>', fnReturnDataArr(dataArr));
+const User2 = {
+    name: 'Max',
+    age: 20,
+    isActive: true,
+    description: 'string',
+};
+// User2.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
 // 3. Pick<T, K>
 // Задача 1: У вас є об'єкт користувача і вам потрібно створити функцію, яка повертає лише ім'я та електронну пошту користувача.
 // Задача 2: Ви хочете зберегти тільки певні поля з API-відповіді для відображення в UI.

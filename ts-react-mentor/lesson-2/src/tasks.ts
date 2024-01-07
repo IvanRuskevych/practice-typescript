@@ -44,14 +44,71 @@ function fnUpdateUser2(updateUserProfile: Partial<typeUser1>): typeUser1 {
 const updateUserProfile2: Partial<typeUser1> = {
   description: 'updateUserProfile: Partial<typeUser1>',
 };
+
 console.log('Задача 2 Partial<T>', fnUpdateUser2(updateUserProfile2));
 
-// Readonly<T>
+// Задача 1: Readonly<T>
+// Ви розробляєте функцію, яка приймає масив чисел і повертає його ж,
+// але ви хочете гарантувати, що функція не змінює вхідний масив.
 
-// Задача 1: Ви розробляєте функцію, яка приймає масив чисел і повертає його ж,
-//   але ви хочете гарантувати, що функція не змінює вхідний масив.
+type typeData = number[];
 
-// Задача 2: Створіть об'єкт конфігурації, який не можна змінювати після його створення.
+function fnReturnData0(data: typeData): Readonly<typeData> {
+  data.push(6);
+  return data;
+}
+
+function fnReturnData(data: Readonly<typeData>): typeData {
+  // data.push(6); // Помилка компіляції: "push" не існує на типі "Readonly<typeData>"
+  return Array.from(data);
+}
+
+function fnReturnDataArr(data: ReadonlyArray<number>): typeData {
+  // data.push(6); // Помилка компіляції: "push" не існує на типі "ReadonlyArray<number>"
+  return Array.from(data);
+}
+
+const data: typeData = [1, 2, 3, 4, 5];
+const dataArr: typeData = [5, 4, 3, 2, 1];
+
+console.log('Задача 1 Readonly<T>', fnReturnData(data));
+console.log('Задача 1 Readonly<T>', fnReturnDataArr(dataArr));
+
+// Так, існує відмінність між Readonly<typeData> та ReadonlyArray<number> в даному контексті.
+
+// Readonly<typeData>:
+
+// Readonly<T> - це узагальнений тип TypeScript, який робить всі властивості об'єкта T та його вкладених об'єктів доступними тільки для читання.
+// У моєму випадку Readonly<typeData> застосовується до масиву чисел typeData, тобто робить сам масив та його властивості доступними лише для читання.
+// ReadonlyArray<number>:
+
+// ReadonlyArray<T> - це тип TypeScript, який робить всі методи для зміни масиву (push, pop, splice, і т. д.) недоступними,
+// але не робить сам масив доступним лише для читання.
+// У моєму випадку ReadonlyArray<number> застосовується до масиву чисел, роблячи методи для зміни масиву недоступними.
+
+// ОТЖЕ: Обидва коди викликають помилку компіляції, оскільки метод push не існує на об'єктах
+// з типами Readonly < typeData > та ReadonlyArray<number>.Однак різниця полягає в тому, що Readonly < typeData >
+// застосовується до всього типу typeData(включаючи методи), тоді як ReadonlyArray < number > застосовується лише до методів масиву,
+// залишаючи сам масив доступним для зчитування.
+
+// Задача 2: Readonly<T>
+//  Створіть об'єкт конфігурації, який не можна змінювати після його створення.
+
+type typeUser2 = {
+  name: string;
+  age: number | null;
+  isActive: boolean;
+  description: string;
+};
+
+const User2: Readonly<typeUser2> = {
+  name: 'Max',
+  age: 20,
+  isActive: true,
+  description: 'string',
+};
+
+// User2.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
 
 // 3. Pick<T, K>
 
