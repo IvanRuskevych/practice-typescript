@@ -126,7 +126,11 @@ const student = {
 // console.log('getPropertyArray(student, 1)', getPropertyArray(student, 1)); // 12
 // console.log('getPropertyArray(student, "one")', getPropertyArray(student, 'one')); // one
 // console.log('getPropertyArray(student, "one")', getPropertyArray(student, 2)); // error -> Argument of type '2' is not assignable to parameter of type '"one" | 1 | "name" | "age" | "groupNumber"'
-// patrial <T>
+/*
+ * Partial<T>
+ * time 1:39:20 ==================================================================================
+ * Використовуєть для будь яких змін обєкта: темна світла тема, шрифти, і тд
+ */
 // type Todo = {
 //   title: string;
 //   description: string;
@@ -144,7 +148,12 @@ const student = {
 //   description: "Study generics in TypeScript",
 // });
 // console.log(todo2);
-// ReadOnly
+/*
+ * ReadOnly<T> - для обєктів
+ * ReadonlyArray<T> - для масивів
+ * time 1:53:40 ==================================================================================
+ * Використовуєть для будь яких змін обєкта: темна світла тема, шрифти, і тд
+ */
 // type User = {
 //   name: string;
 //   age: number;
@@ -157,7 +166,9 @@ const student = {
 // const numbers: ReadonlyArray<number> = [1, 2, 3, 4, 5];
 // numbers.push(6); // Помилка: Property 'push' does not exist on type 'readonly number[]'.
 // numbers[0] = 0; // Помилка: Index signature in type 'readonly number[]' only permits reading.
-// Pick<T, K>
+/*
+ * Pick<T, K>
+ */
 // type Person = {
 //   name: string;
 //   age: number;
@@ -178,16 +189,9 @@ const student = {
 //     age: 25,
 //     address: "123 Main St"  // Помилка тут
 // };
-// Record<K, T>
-// type CityDatabase = Record<string, number>;
-// const database: CityDatabase = {
-//   Kyiv: 2884000,
-//   Kharkiv: 1441000,
-//   Odesa: 1015000,
-// };
-// // Додаємо новий запис в базу даних, де ключ (ім'я міста) має тип string, а значення (населення) має тип number
-// database.Lviv = 721301;
-//  Omit<T, K>
+/**
+ * Omit<T, K>
+ */
 // type Person = {
 //   name: string;
 //   age: number;
@@ -199,6 +203,21 @@ const student = {
 //   age: 30,
 //   // address: "123 Main St" // Ця властивість тут не допустима
 // };
+/**
+ * Record<K, T> - дозволяє динамічно додати нові поля
+ * або "enum" - не дозволяє динамічно додавати нові поля
+ * обидва варіанти роблять одне і те саме
+ * створюють обєкт незмінних значень, тобто значень які завжди сталі
+ * і ніколи змінюватися в вашому коді не будуть
+ */
+// type CityDatabase = Record<string, number>;
+// const database: CityDatabase = {
+//   Kyiv: 2884000,
+//   Kharkiv: 1441000,
+//   Odesa: 1015000,
+// };
+// // Додаємо новий запис в базу даних, де ключ (ім'я міста) має тип string, а значення (населення) має тип number
+// database.Lviv = 721301;
 // function getPromise(): Promise<(string | number)[]> {
 //   return new Promise<(string | number)[]>((resolve) => {
 //     resolve(["Text", 50]);
