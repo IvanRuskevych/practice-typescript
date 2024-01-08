@@ -1,38 +1,47 @@
-// Partial<T>
+/* 1.1
+ * Задача 1: Partial<T>
+ * Уявімо, що у вас є форма редагування профілю користувача.
+ * Користувач може вибирати, які поля він хоче оновити.
+ * Створіть тип для такої форми на основі існуючого типу User.
+ *
+ */
 
-// Задача 1:
-// Уявімо, що у вас є форма редагування профілю користувача.
-// Користувач може вибирати, які поля він хоче оновити.
-// Створіть тип для такої форми на основі існуючого типу User.
-
-type typeUser1 = {
+type typeUser = {
   name: string;
   age: number | null;
   isActive: boolean;
   description: string;
+  email?: string;
 };
 
-type typeUserProfileUpdate = Partial<typeUser1>;
+type typeUserProfileUpdate = Partial<typeUser>;
 
-function fnUpdateUser1(
-  userProfile: typeUser1,
-  updateUserProfile: typeUserProfileUpdate
-): typeUser1 {
+function fnUpdateUser(userProfile: typeUser, updateUserProfile: typeUserProfileUpdate): typeUser {
   return { ...userProfile, ...updateUserProfile };
 }
 
-const User1: typeUser1 = { name: 'Max', age: 20, isActive: true, description: 'string' };
-const updateUser1: typeUserProfileUpdate = {
+const user: typeUser = {
+  name: 'Max',
+  age: 20,
+  isActive: true,
+  description: 'string',
+  email: 'user@email.com',
+};
+const updateuser: typeUserProfileUpdate = {
   isActive: false,
   description: 'false',
 };
 
-console.log('Задача 1 Partial<T>', fnUpdateUser1(User1, updateUser1));
-//   Задача 2: У вас є конфігураційний об'єкт з декількома полями.
-// Створіть функцію, яка приймає часткові налаштування та повертає
-// повний конфігураційний об'єкт.
+console.log('Задача 1 Partial<T>', fnUpdateUser(user, updateuser));
 
-function fnUpdateUser2(updateUserProfile: Partial<typeUser1>): typeUser1 {
+/* 1.2
+ * Задача 2: Partial<T>
+ * У вас є конфігураційний об'єкт з декількома полями.
+ * Створіть функцію, яка приймає часткові налаштування та повертає
+ * повний конфігураційний об'єкт.
+ */
+
+function fnUpdateUser2(updateUserProfile: Partial<typeUser>): typeUser {
   return {
     name: updateUserProfile.name || 'User',
     age: updateUserProfile.age || null,
@@ -41,15 +50,17 @@ function fnUpdateUser2(updateUserProfile: Partial<typeUser1>): typeUser1 {
   };
 }
 
-const updateUserProfile2: Partial<typeUser1> = {
-  description: 'updateUserProfile: Partial<typeUser1>',
+const updateUserProfile2: Partial<typeUser> = {
+  description: 'updateUserProfile: Partial<typeUser>',
 };
 
 console.log('Задача 2 Partial<T>', fnUpdateUser2(updateUserProfile2));
 
-// Задача 1: Readonly<T>
-// Ви розробляєте функцію, яка приймає масив чисел і повертає його ж,
-// але ви хочете гарантувати, що функція не змінює вхідний масив.
+/* 2.1
+ * Задача 1: Readonly<T>
+ * Ви розробляєте функцію, яка приймає масив чисел і повертає його ж,
+ * але ви хочете гарантувати, що функція не змінює вхідний масив.
+ */
 
 type typeData = number[];
 
@@ -77,11 +88,10 @@ console.log('Задача 1 Readonly<T>', fnReturnDataArr(dataArr));
 // Так, існує відмінність між Readonly<typeData> та ReadonlyArray<number> в даному контексті.
 
 // Readonly<typeData>:
-
 // Readonly<T> - це узагальнений тип TypeScript, який робить всі властивості об'єкта T та його вкладених об'єктів доступними тільки для читання.
 // У моєму випадку Readonly<typeData> застосовується до масиву чисел typeData, тобто робить сам масив та його властивості доступними лише для читання.
-// ReadonlyArray<number>:
 
+// ReadonlyArray<number>:
 // ReadonlyArray<T> - це тип TypeScript, який робить всі методи для зміни масиву (push, pop, splice, і т. д.) недоступними,
 // але не робить сам масив доступним лише для читання.
 // У моєму випадку ReadonlyArray<number> застосовується до масиву чисел, роблячи методи для зміни масиву недоступними.
@@ -91,29 +101,55 @@ console.log('Задача 1 Readonly<T>', fnReturnDataArr(dataArr));
 // застосовується до всього типу typeData(включаючи методи), тоді як ReadonlyArray < number > застосовується лише до методів масиву,
 // залишаючи сам масив доступним для зчитування.
 
-// Задача 2: Readonly<T>
-//  Створіть об'єкт конфігурації, який не можна змінювати після його створення.
+/* 2.2
+ * Задача 2: Readonly<T>
+ * Створіть об'єкт конфігурації, який не можна змінювати після його створення.
+ */
 
-type typeUser2 = {
-  name: string;
-  age: number | null;
-  isActive: boolean;
-  description: string;
-};
-
-const User2: Readonly<typeUser2> = {
+const User_Readonly: Readonly<typeUser> = {
   name: 'Max',
   age: 20,
   isActive: true,
   description: 'string',
 };
 
-// User2.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
+// User_Readonly.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
 
-// 3. Pick<T, K>
+/*
+ * 3. Pick<T, K>
+ */
 
 // Задача 1: У вас є об'єкт користувача і вам потрібно створити функцію, яка повертає лише ім'я та електронну пошту користувача.
+
+function fnGetUserPartData(user: typeUser): Pick<typeUser, 'name' | 'email'> {
+  return { name: user.name, email: user.email };
+}
+
+console.log('Задача 1 Pick<T, K>', fnGetUserPartData(user));
+
 // Задача 2: Ви хочете зберегти тільки певні поля з API-відповіді для відображення в UI.
+
+type typeApiContent = {
+  id: number;
+  title: string;
+  content: string;
+  createAt: Date;
+};
+
+type typeGetApiContent = Pick<typeApiContent, 'title' | 'content'>;
+
+function fnGetApiContent(data: typeApiContent): typeGetApiContent {
+  return { title: data.title, content: data.content };
+}
+
+const dataApiContent: typeApiContent = {
+  id: 1,
+  title: 'Задача 2 Pick<T, K>',
+  content: "type typeGetApiContent = Pick<typeApiContent, 'title' | 'content'>",
+  createAt: new Date(),
+};
+
+console.log(`${dataApiContent.title}`, fnGetApiContent(dataApiContent));
 
 // 4. Record<K, T>
 

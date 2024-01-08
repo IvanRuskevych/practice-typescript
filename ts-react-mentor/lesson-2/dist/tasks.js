@@ -1,16 +1,31 @@
-// Partial<T>
-function fnUpdateUser1(userProfile, updateUserProfile) {
+/* 1.1
+ * Задача 1: Partial<T>
+ * Уявімо, що у вас є форма редагування профілю користувача.
+ * Користувач може вибирати, які поля він хоче оновити.
+ * Створіть тип для такої форми на основі існуючого типу User.
+ *
+ */
+function fnUpdateUser(userProfile, updateUserProfile) {
     return { ...userProfile, ...updateUserProfile };
 }
-const User1 = { name: 'Max', age: 20, isActive: true, description: 'string' };
-const updateUser1 = {
+const user = {
+    name: 'Max',
+    age: 20,
+    isActive: true,
+    description: 'string',
+    email: 'user@email.com',
+};
+const updateuser = {
     isActive: false,
     description: 'false',
 };
-console.log('Задача 1 Partial<T>', fnUpdateUser1(User1, updateUser1));
-//   Задача 2: У вас є конфігураційний об'єкт з декількома полями.
-// Створіть функцію, яка приймає часткові налаштування та повертає
-// повний конфігураційний об'єкт.
+console.log('Задача 1 Partial<T>', fnUpdateUser(user, updateuser));
+/* 1.2
+ * Задача 2: Partial<T>
+ * У вас є конфігураційний об'єкт з декількома полями.
+ * Створіть функцію, яка приймає часткові налаштування та повертає
+ * повний конфігураційний об'єкт.
+ */
 function fnUpdateUser2(updateUserProfile) {
     return {
         name: updateUserProfile.name || 'User',
@@ -20,7 +35,7 @@ function fnUpdateUser2(updateUserProfile) {
     };
 }
 const updateUserProfile2 = {
-    description: 'updateUserProfile: Partial<typeUser1>',
+    description: 'updateUserProfile: Partial<typeUser>',
 };
 console.log('Задача 2 Partial<T>', fnUpdateUser2(updateUserProfile2));
 function fnReturnData0(data) {
@@ -39,16 +54,47 @@ const data = [1, 2, 3, 4, 5];
 const dataArr = [5, 4, 3, 2, 1];
 console.log('Задача 1 Readonly<T>', fnReturnData(data));
 console.log('Задача 1 Readonly<T>', fnReturnDataArr(dataArr));
-const User2 = {
+// Так, існує відмінність між Readonly<typeData> та ReadonlyArray<number> в даному контексті.
+// Readonly<typeData>:
+// Readonly<T> - це узагальнений тип TypeScript, який робить всі властивості об'єкта T та його вкладених об'єктів доступними тільки для читання.
+// У моєму випадку Readonly<typeData> застосовується до масиву чисел typeData, тобто робить сам масив та його властивості доступними лише для читання.
+// ReadonlyArray<number>:
+// ReadonlyArray<T> - це тип TypeScript, який робить всі методи для зміни масиву (push, pop, splice, і т. д.) недоступними,
+// але не робить сам масив доступним лише для читання.
+// У моєму випадку ReadonlyArray<number> застосовується до масиву чисел, роблячи методи для зміни масиву недоступними.
+// ОТЖЕ: Обидва коди викликають помилку компіляції, оскільки метод push не існує на об'єктах
+// з типами Readonly < typeData > та ReadonlyArray<number>.Однак різниця полягає в тому, що Readonly < typeData >
+// застосовується до всього типу typeData(включаючи методи), тоді як ReadonlyArray < number > застосовується лише до методів масиву,
+// залишаючи сам масив доступним для зчитування.
+/* 2.2
+ * Задача 2: Readonly<T>
+ * Створіть об'єкт конфігурації, який не можна змінювати після його створення.
+ */
+const User_Readonly = {
     name: 'Max',
     age: 20,
     isActive: true,
     description: 'string',
 };
-// User2.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
-// 3. Pick<T, K>
+// User_Readonly.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
+/*
+ * 3. Pick<T, K>
+ */
 // Задача 1: У вас є об'єкт користувача і вам потрібно створити функцію, яка повертає лише ім'я та електронну пошту користувача.
-// Задача 2: Ви хочете зберегти тільки певні поля з API-відповіді для відображення в UI.
+function fnGetUserPartData(user) {
+    return { name: user.name, email: user.email };
+}
+console.log('Задача 1 Pick<T, K>', fnGetUserPartData(user));
+function fnGetApiContent(data) {
+    return { title: data.title, content: data.content };
+}
+const dataApiContent = {
+    id: 1,
+    title: 'Задача 2 Pick<T, K>',
+    content: "type typeGetApiContent = Pick<typeApiContent, 'title' | 'content'>",
+    createAt: new Date(),
+};
+console.log(`${dataApiContent.title}`, fnGetApiContent(dataApiContent));
 // 4. Record<K, T>
 // Задача 1: Ви хочете створити об'єкт, який мапить імена користувачів до їх віку.
 // Задача 2: Мапа з іменами місяців до кількості днів у них.
