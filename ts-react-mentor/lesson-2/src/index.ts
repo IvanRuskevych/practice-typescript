@@ -222,6 +222,38 @@ const student = {
 // numbers.push(6); // Помилка: Property 'push' does not exist on type 'readonly number[]'.
 // numbers[0] = 0; // Помилка: Index signature in type 'readonly number[]' only permits reading.
 
+// з конспекту
+type User = {
+  id: number;
+  name: string;
+  email: string;
+};
+
+let alice: User = {
+  id: 1,
+  name: 'Alice',
+  email: 'alice@example.com',
+};
+
+alice.name = 'Bob'; // OK
+
+let aliceReadonly: Readonly<User> = {
+  id: 1,
+  name: 'Alice',
+  email: 'alice@example.com',
+};
+
+aliceReadonly.name = 'Bob'; // Error: Cannot assign to 'name' because it is a read-only property.
+
+export {};
+
+const arr: Readonly<string[]> = ['One', 'Two', 'Three'];
+// Тепер цей масив не можна модифікувати жодним чином.
+arr.push('One');
+arr.push('Four'); // Error: Property 'push' does not exist on type 'readonly string[]'.
+
+export {};
+
 /*
  * Pick<T, K>
  */
