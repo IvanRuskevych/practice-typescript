@@ -5,6 +5,14 @@
  * Створіть тип для такої форми на основі існуючого типу User.
  *
  */
+const { NAME, AGE, IS_ACTIVE, DESCRIPTION, EMAIL, PASSWORD } = {
+    NAME: 'name',
+    AGE: 'age',
+    IS_ACTIVE: 'isActive',
+    DESCRIPTION: 'description',
+    EMAIL: 'email',
+    PASSWORD: 'password',
+};
 function fnUpdateUser(userProfile, updateUserProfile) {
     return { ...userProfile, ...updateUserProfile };
 }
@@ -14,6 +22,7 @@ const user = {
     isActive: true,
     description: 'string',
     email: 'user@email.com',
+    password: 'password',
 };
 const updateuser = {
     isActive: false,
@@ -32,6 +41,7 @@ function fnUpdateUser2(updateUserProfile) {
         age: updateUserProfile.age || null,
         isActive: updateUserProfile.isActive || false,
         description: updateUserProfile.description || '',
+        password: updateUserProfile.password || '',
     };
 }
 const updateUserProfile2 = {
@@ -75,6 +85,7 @@ const User_Readonly = {
     age: 20,
     isActive: true,
     description: 'string',
+    password: 'password',
 };
 // User_Readonly.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
 /*
@@ -95,12 +106,32 @@ const dataApiContent = {
     createAt: new Date(),
 };
 console.log(`${dataApiContent.title}`, fnGetApiContent(dataApiContent));
-// 4. Record<K, T>
+/**
+ * 4. Record<K, T>
+ */
 // Задача 1: Ви хочете створити об'єкт, який мапить імена користувачів до їх віку.
+const usersAge = {
+    Max: 25,
+    Maxi: 30,
+    Maxim: 35,
+    // Maximus: '40',// error
+};
 // Задача 2: Мапа з іменами місяців до кількості днів у них.
-// 5. Omit<T, K>
-// Задача 1: У вас є тип користувача, але ви хочете створити новий тип без поля пароля для відправлення даних на клієнтську сторону.
-//Задача 2: Ви хочете створити новий тип на основі API-відповіді, але без дати створення.
+const daysInMonth = { January: 31, February: 28, March: 31 };
+const userDataToSend = {
+    name: 'Max',
+    age: 20,
+    isActive: true,
+    description: 'string',
+    email: 'user@email.com',
+    // password: 'password', // error
+};
+const apiContentToSend = {
+    id: 1,
+    title: 'Задача 2 Pick<T, K>',
+    content: "type typeGetApiContent = Pick<typeApiContent, 'title' | 'content'>",
+    // createAt: new Date(), // error
+};
 // Робота з інтерфейсами
 // Спроєктуйте інтерфейс для ресторанного меню.
 // Він повинен містити поля: назва, ціна, категорія(наприклад, закуска, основна страва, десерт).

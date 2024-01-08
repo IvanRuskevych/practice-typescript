@@ -6,12 +6,22 @@
  *
  */
 
+const { NAME, AGE, IS_ACTIVE, DESCRIPTION, EMAIL, PASSWORD } = {
+  NAME: 'name' as const,
+  AGE: 'age' as const,
+  IS_ACTIVE: 'isActive' as const,
+  DESCRIPTION: 'description' as const,
+  EMAIL: 'email' as const,
+  PASSWORD: 'password' as const,
+};
+
 type typeUser = {
-  name: string;
-  age: number | null;
-  isActive: boolean;
-  description: string;
-  email?: string;
+  [NAME]: string;
+  [AGE]: number | null;
+  [IS_ACTIVE]: boolean;
+  [DESCRIPTION]: string;
+  [EMAIL]?: string;
+  [PASSWORD]: string;
 };
 
 type typeUserProfileUpdate = Partial<typeUser>;
@@ -26,7 +36,9 @@ const user: typeUser = {
   isActive: true,
   description: 'string',
   email: 'user@email.com',
+  password: 'password',
 };
+
 const updateuser: typeUserProfileUpdate = {
   isActive: false,
   description: 'false',
@@ -47,6 +59,7 @@ function fnUpdateUser2(updateUserProfile: Partial<typeUser>): typeUser {
     age: updateUserProfile.age || null,
     isActive: updateUserProfile.isActive || false,
     description: updateUserProfile.description || '',
+    password: updateUserProfile.password || '',
   };
 }
 
@@ -111,6 +124,7 @@ const User_Readonly: Readonly<typeUser> = {
   age: 20,
   isActive: true,
   description: 'string',
+  password: 'password',
 };
 
 // User_Readonly.name = 'User'; // Cannot assign to 'name' because it is a read-only property.
@@ -151,15 +165,48 @@ const dataApiContent: typeApiContent = {
 
 console.log(`${dataApiContent.title}`, fnGetApiContent(dataApiContent));
 
-// 4. Record<K, T>
+/**
+ * 4. Record<K, T>
+ */
 
 // Задача 1: Ви хочете створити об'єкт, який мапить імена користувачів до їх віку.
-// Задача 2: Мапа з іменами місяців до кількості днів у них.
+const usersAge: Record<string, number> = {
+  Max: 25,
+  Maxi: 30,
+  Maxim: 35,
+  // Maximus: '40',// error
+};
 
-// 5. Omit<T, K>
+// Задача 2: Мапа з іменами місяців до кількості днів у них.
+const daysInMonth: Record<string, number> = { January: 31, February: 28, March: 31 };
+
+/**
+ * 5. Omit<T, K>
+ */
 
 // Задача 1: У вас є тип користувача, але ви хочете створити новий тип без поля пароля для відправлення даних на клієнтську сторону.
+
+type typeSafeUser = Omit<typeUser, 'password'>;
+
+const userDataToSend: typeSafeUser = {
+  name: 'Max',
+  age: 20,
+  isActive: true,
+  description: 'string',
+  email: 'user@email.com',
+  // password: 'password', // error
+};
+
 //Задача 2: Ви хочете створити новий тип на основі API-відповіді, але без дати створення.
+
+type typeSafeData = Omit<typeApiContent, 'createAt'>;
+
+const apiContentToSend: typeSafeData = {
+  id: 1,
+  title: 'Задача 2 Pick<T, K>',
+  content: "type typeGetApiContent = Pick<typeApiContent, 'title' | 'content'>",
+  // createAt: new Date(), // error
+};
 
 // Робота з інтерфейсами
 
